@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagramme Sankey Interactif</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        .config {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .config label {
+            display: inline-block;
+            width: 180px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .config input {
+            width: 150px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .config-row {
+            margin-bottom: 10px;
+        }
+        hr {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="config">
+    <h2>Configuration du Diagramme</h2>
+    <div class="config-row">
+        <label for="label0">Libellé KST :</label>
+        <input type="text" id="label0" value="KST">
+        <label for="val0">% vers 10x :</label>
+        <input type="number" id="val0" value="10">
+        <label for="col0">Couleur :</label>
+        <input type="color" id="col0" value="#FFA07A">
+    </div>
+    <div class="config-row">
+        <label for="label1">Libellé BigBets :</label>
+        <input type="text" id="label1" value="BigBets">
+        <label for="val1">% vers 10x :</label>
+        <input type="number" id="val1" value="30">
+        <label for="col1">Couleur :</label>
+        <input type="color" id="col1" value="#90EE90">
+    </div>
+    <div class="config-row">
+        <label for="label2">Libellé BU Init. 10x :</label>
+        <input type="text" id="label2" value="BU Initiatives 10x">
+        <label for="val2">% vers 10x :</label>
+        <input type="number" id="val2" value="100">
+        <label for="col2">Couleur :</label>
+        <input type="color" id="col2" value="#FF7F50">
+    </div>
+    <div class="config-row">
+        <label for="label3">Libellé cible :</label>
+        <input type="text" id="label3" value="10x">
+        <label for="col3">Couleur cible :</label>
+        <input type="color" id="col3" value="#FF4500">
+    </div>
+    <button onclick="updateDiagram()">Mettre à jour le diagramme</button>
+</div>
+
+<hr>
+
+<div id="sankey"></div>
+
+<script>
+function updateDiagram() {
+    const labels = [
+        document.getElementById("label0").value,
+        document.getElementById("label1").value,
+        document.getElementById("label2").value,
+        document.getElementById("label3").value
+    ];
+    const values = [
+        parseFloat(document.getElementById("val0").value),
+        parseFloat(document.getElementById("val1").value),
+        parseFloat(document.getElementById("val2").value)
+    ];
+    const colors = [
+        document.getElementById("col0").value,
+        document.getElementById("col1").value,
+        document.getElementById("col2").value,
+        document.getElementById("col3").value
+    ];
+
+    const data = {
+        type: "sankey",
+        orientation: "h",
+        node: {
+            pad: 15,
+            thickness: 30,
+            line: { color: "black", width: 0.5 },
+            label: labels,
+            color: colors
+        },
+        link: {
+            source: [0, 1, 2],
+            target: [3, 3, 3],
+            value: values,
+            color: [
+                colors[0] + "99", colors[1] + "99", colors[2] + "99"
+            ]
+        }
+    };
+
+    Plotly.react("sankey", [data], {
+        title: "Flux vers " + labels[3],
+        font: { size: 14 }
+    });
+}
+
+updateDiagram();  // Initial rendering
+</script>
+
+</body>
+</html>
+
