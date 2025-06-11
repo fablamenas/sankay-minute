@@ -1,10 +1,11 @@
 # Sankay Minute
 
-Ce dépôt contient un exemple minimal d'interface web permettant de générer dynamiquement un diagramme de Sankey à l'aide de [Plotly](https://plotly.com/javascript/sankey-diagrams/). Le fichier `sankay-minute-configurable.html` propose quelques champs de saisie pour personnaliser les libellés, les valeurs et les couleurs des différentes branches.
+Ce dépôt contient un exemple minimal d'interface web permettant de générer dynamiquement un diagramme de Sankey à l'aide de [Plotly](https://plotly.com/javascript/sankey-diagrams/). Le fichier `sankay-minute-configurable.html` propose quelques champs de saisie pour personnaliser les libellés, les valeurs et les couleurs des différentes branches.  Une seconde page permet d'afficher automatiquement un diagramme à partir d'un fichier JSON généré depuis Excel.
 
-## Fichier principal
+## Fichiers principaux
 
-- **sankay-minute-configurable.html** : page HTML autonome incluant un script JavaScript pour afficher un diagramme de Sankey. Les données sont lues dans les champs du formulaire puis utilisées pour mettre à jour le graphe via `Plotly.react()`.
+- **sankay-minute-configurable.html** : page HTML autonome incluant un script JavaScript pour saisir manuellement quelques valeurs de test puis mettre à jour le graphe via `Plotly.react()`.
+- **sankey-from-json.html** : page HTML qui charge automatiquement un fichier `data.json` (généré depuis Excel) et affiche le diagramme.
 
 Extrait du code :
 ```html
@@ -37,8 +38,19 @@ Ces valeurs alimentent ensuite la configuration du diagramme de Sankey.
 1. Ouvrir `sankay-minute-configurable.html` dans un navigateur moderne.
 2. Modifier les libellés, pourcentages et couleurs selon vos besoins.
 3. Cliquer sur **Mettre à jour le diagramme** pour rafraîchir la visualisation.
+4. Pour afficher vos propres données, générez un `data.json` à partir d'un fichier Excel puis ouvrez `sankey-from-json.html` (idéalement via `python -m http.server`).
 
 Cette page peut servir de base pour créer rapidement des schémas de flux personnalisés.
+
+## Conversion depuis Excel
+
+Un script Python est fourni pour transformer un tableau Excel en fichier JSON compatible avec Plotly.
+
+```bash
+python scripts/convert_excel_to_sankey.py mon_tableau.xlsx
+```
+
+Cela génère un fichier `data.json` que vous pouvez ensuite afficher avec la page `sankey-from-json.html`. Servez les fichiers via un petit serveur local (`python -m http.server`) pour permettre le chargement du JSON.
 
 ## Notes
 
