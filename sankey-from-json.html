@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagramme Sankey depuis Excel</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        #sankey { margin-top: 20px; }
+    </style>
+</head>
+<body>
+<h2>Diagramme Sankey généré à partir d'un fichier Excel</h2>
+<p>Exécutez le script <code>scripts/convert_excel_to_sankey.py</code> pour produire <code>data.json</code> puis rechargez cette page.</p>
+<div id="sankey">Chargement en cours…</div>
+<script>
+async function loadData() {
+    try {
+        const response = await fetch('data.json');
+        const json = await response.json();
+        renderSankey(json);
+    } catch (e) {
+        document.getElementById('sankey').innerText = 'Impossible de charger data.json : ' + e;
+    }
+}
+
+function renderSankey(json) {
+    const data = {
+        type: 'sankey',
+        orientation: 'h',
+        node: {
+            pad: 15,
+            thickness: 30,
+            line: {color: 'black', width: 0.5},
+            label: json.node.label
+        },
+        link: json.link
+    };
+    Plotly.newPlot('sankey', [data], {font: {size: 14}});
+}
+
+loadData();
+</script>
+</body>
+</html>
