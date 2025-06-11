@@ -1,0 +1,6 @@
+# Fichiers générés localement
+__pycache__/
+*.pyc
+docs/data.json
+*.ipynb
+.ipynb_checkpoints/
