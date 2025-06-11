@@ -38,13 +38,20 @@ def main():
     parser.add_argument(
         "-o",
         "--output",
-        default="data.json",
-        help="Nom du fichier JSON de sortie (par d\u00e9faut data.json)",
+        default="docs/data.json",
+        help="Nom du fichier JSON de sortie (par d\u00e9faut docs/data.json)",
     )
     args = parser.parse_args()
 
     data = excel_to_sankey(args.excel_file)
-    Path(args.output).write_text(
+
+    # Always resolve the docs directory relative to the repository root so the
+    # JSON ends up in the correct location even if the script is executed from
+    # within ``scripts``.
+    repo_root = Path(__file__).resolve().parents[1]
+    out_path = repo_root / args.output
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(
         json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
     )
     print(f"Fichier {args.output} g\u00e9n\u00e9r\u00e9 avec succ\u00e8s")
