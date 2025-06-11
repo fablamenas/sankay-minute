@@ -2,5 +2,4 @@
 __pycache__/
 *.pyc
 docs/data.json
-*.ipynb
 .ipynb_checkpoints/
