@@ -37,7 +37,7 @@ Ces valeurs alimentent ensuite la configuration du diagramme de Sankey.
 
 1. Ouvrir `docs/index.html` dans un navigateur moderne et choisir la page souhaitée.
 2. Dans la page de configuration, modifier les libellés, pourcentages et couleurs selon vos besoins puis cliquer sur **Mettre à jour le diagramme**.
-3. Pour afficher vos propres données, générez un `docs/data.json` à partir d'un fichier Excel puis ouvrez la page de chargement du JSON.
+3. Pour afficher vos propres données, générez un `docs/data.json` à partir d'un fichier Excel puis ouvrez la page de chargement du JSON. Le script place automatiquement ce fichier dans le dossier `docs` situé à la racine du projet, quel que soit le répertoire courant au moment de son exécution.
 
 Cette page peut servir de base pour créer rapidement des schémas de flux personnalisés.
 
@@ -49,7 +49,7 @@ Un script Python est fourni pour transformer un tableau Excel en fichier JSON co
 python scripts/convert_excel_to_sankey.py mon_tableau.xlsx
 ```
 
-Cela génère un fichier `docs/data.json` que vous pouvez ensuite ouvrir dans `docs/from-json.html` pour afficher votre diagramme.
+Le fichier `docs/data.json` est toujours créé au niveau supérieur du projet, même si vous lancez la commande depuis le dossier `scripts`. Vous pouvez ensuite ouvrir `docs/from-json.html` pour afficher votre diagramme.
 
 ## Notes
 

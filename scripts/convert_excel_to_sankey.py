@@ -44,7 +44,12 @@ def main():
     args = parser.parse_args()
 
     data = excel_to_sankey(args.excel_file)
-    out_path = Path(args.output)
+
+    # Always resolve the docs directory relative to the repository root so the
+    # JSON ends up in the correct location even if the script is executed from
+    # within ``scripts``.
+    repo_root = Path(__file__).resolve().parents[1]
+    out_path = repo_root / args.output
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
         json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
